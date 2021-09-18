@@ -1,13 +1,12 @@
 package datastructure;
 
-public class HashNode<K, V>{
+public class HashNode<K, V> extends Node<V>{
 
 	private K key;
-	private V value;
-	
+
 	public HashNode(K key, V value) {
+		super(value);
 		this.key = key;
-		this.value = value;
 	}
 
 	public K getKey() {
@@ -18,12 +17,4 @@ public class HashNode<K, V>{
 		this.key = key;
 	}
 
-	public V getValue() {
-		return value;
-	}
-
-	public void setValue(V value) {
-		this.value = value;
-	}
-	
 }

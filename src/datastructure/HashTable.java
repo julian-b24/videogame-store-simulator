@@ -6,8 +6,9 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 	
 	private HashNode<K, V>[] table;
 	
+	@SuppressWarnings("unchecked")
 	public HashTable(){
-		table = new HashNode[MAX_SIZE];
+		table = (HashNode<K, V>[]) new HashNode[MAX_SIZE];
 	}
 	
 	@Override
@@ -63,7 +64,13 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 	}
 
 	@Override
-	public boolean contains(K key) {
+	public boolean contains(V value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public boolean containsKey(K key) {
 		boolean contains = false;
 		for (int i = 0; i < table.length && !contains; i++) {
 			if(table[i] != null && table[i].getKey().equals(key)) {

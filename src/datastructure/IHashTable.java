@@ -2,8 +2,10 @@ package datastructure;
 
 public interface IHashTable<K,V> {
 
-	public void add(K key, V Value);
+	public void add(K key, V value);
 	public V get(K key);
 	public void delete(K key);
-	public boolean contains(K key);
+	public boolean contains(V value);
+	public boolean containsKey(K key);
+	
 }
