@@ -31,13 +31,13 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 	public V get(K key) {
 		int i = 0;
 		V value = null;
-		boolean founded = false;
+		boolean found = false;
 		int hashCode = key.hashCode();
 		
-		while(i < MAX_SIZE && !founded) {
+		while(i < MAX_SIZE && !found) {
 			int index = hashCode + i;
 			if(table[index] != null && table[index].getKey().equals(key)) {
-				founded = true;
+				found = true;
 				value = table[index].getValue();
 			}else {
 				i++;
@@ -51,11 +51,11 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 	public void delete(K key) {
 		int i = 0;
 		int hashCode = key.hashCode();
-		boolean founded = false;
-		while(i < MAX_SIZE && !founded) {
+		boolean found = false;
+		while(i < MAX_SIZE && !found) {
 			int index = hashCode + i;
 			if(table[index] == null && table[index].getKey().equals(key)) {
-				founded = true;
+				found = true;
 				table[index] = null;
 			}else {
 				i++;
