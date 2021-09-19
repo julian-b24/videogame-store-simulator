@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 import datastructure.Stack;
 
-public class Client {
+public class Client implements Comparable<Client>{
 
 	private int time;
 	private String id;
 	private ArrayList<String> list;
-	//private Stack<Game> basket;
+	private Stack<Game> basket;
 	
 	public Client(int time, String id, ArrayList<String> list) {
 		this.time = time;
 		this.id = id;
 		this.list = list;
-		//basket = new Stack<Game>();
+		setBasket(new Stack<Game>());
 	}
 
 	public int getTime() {
@@ -40,6 +40,20 @@ public class Client {
 
 	public void setList(ArrayList<String> list) {
 		this.list = list;
+	}
+
+	public Stack<Game> getBasket() {
+		return basket;
+	}
+
+	public void setBasket(Stack<Game> basket) {
+		this.basket = basket;
+	}
+	
+	@Override
+	public int compareTo(Client o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }
