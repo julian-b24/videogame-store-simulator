@@ -8,13 +8,13 @@ public class Client implements Comparable<Client>{
 
 	private int time;
 	private String id;
-	private ArrayList<String> list;
+	private ArrayList<String> gameList;
 	private Stack<Game> basket;
 	
-	public Client(int time, String id, ArrayList<String> list) {
+	public Client(int time, String id, ArrayList<String> gameList) {
 		this.time = time;
 		this.id = id;
-		this.list = list;
+		this.gameList = gameList;
 		setBasket(new Stack<Game>());
 	}
 
@@ -33,13 +33,13 @@ public class Client implements Comparable<Client>{
 	public void setId(String id) {
 		this.id = id;
 	}
-
-	public ArrayList<String> getList() {
-		return list;
+	
+	public ArrayList<String> getGameList() {
+		return gameList;
 	}
 
-	public void setList(ArrayList<String> list) {
-		this.list = list;
+	public void setGameList(ArrayList<String> gameList) {
+		this.gameList = gameList;
 	}
 
 	public Stack<Game> getBasket() {

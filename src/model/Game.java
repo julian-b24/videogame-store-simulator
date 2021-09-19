@@ -4,9 +4,9 @@ public class Game implements Comparable<Game>{
 
 	private String code;
 	private int price;
-	private String shelf;	//Type String or Shelf?
+	private Shelf shelf;
 	
-	public Game(String code, int price, String shelf) {
+	public Game(String code, int price, Shelf shelf) {
 		this.code = code;
 		this.price = price;
 		this.shelf = shelf;
@@ -28,11 +28,11 @@ public class Game implements Comparable<Game>{
 		this.price = price;
 	}
 
-	public String getShelf() {
+	public Shelf getShelf() {
 		return shelf;
 	}
 
-	public void setShelf(String shelf) {
+	public void setShelf(Shelf shelf) {
 		this.shelf = shelf;
 	}
 

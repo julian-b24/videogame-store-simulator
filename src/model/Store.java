@@ -5,17 +5,14 @@ import datastructure.Queue;
 
 public class Store {
 
-	private HashTable<String, Shelf> shelfs;	//Check this suggestion
+	private HashTable<String, Shelf> shelfs;
 	private Queue<Client> clients;
 	private Cashier[] cashiers;
-	private HashTable<String, Game> games;		//Check this suggestion
 	
-	//This is one way of how we could define the parameters, this is just a provisional implementation
-	public Store(HashTable<String, Shelf> shelfs, Queue<Client> clients, int amountCashiers, HashTable<String, Game> games) {
+	public Store(HashTable<String, Shelf> shelfs, Queue<Client> clients, int cashierAmount) {
 		this.shelfs = shelfs;
 		this.clients = clients;
-		cashiers = new Cashier[amountCashiers];
-		this.games = games;
+		cashiers = new Cashier[cashierAmount];
 	}
 
 	public HashTable<String, Shelf> getShelfs() {
@@ -42,14 +39,4 @@ public class Store {
 		this.cashiers = cashiers;
 	}
 
-	public HashTable<String, Game> getGames() {
-		return games;
-	}
-
-	public void setGames(HashTable<String, Game> games) {
-		this.games = games;
-	}
-	
-	
-	
 }
