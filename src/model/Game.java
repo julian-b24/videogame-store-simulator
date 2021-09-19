@@ -1,6 +1,6 @@
 package model;
 
-public class Game {
+public class Game implements Comparable<Game>{
 
 	private String code;
 	private int price;
@@ -35,5 +35,13 @@ public class Game {
 	public void setShelf(String shelf) {
 		this.shelf = shelf;
 	}
+
+	@Override
+	public int compareTo(Game o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
 	
 }
