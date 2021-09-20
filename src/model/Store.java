@@ -8,6 +8,7 @@ public class Store {
 	private HashTable<String, Shelf> shelfs;
 	private Queue<Client> clients;
 	private Cashier[] cashiers;
+	private HashTable<String, Game> games;
 	
 	public Store(HashTable<String, Shelf> shelfs, Queue<Client> clients, int cashierAmount) {
 		this.shelfs = shelfs;
