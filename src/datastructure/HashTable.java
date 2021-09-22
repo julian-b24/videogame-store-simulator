@@ -64,9 +64,16 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 	}
 
 	@Override
-	public boolean contains(V value) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean containsValue(V value) {
+		boolean contains = false;
+		int i = 0;
+		while(i < MAX_SIZE && !contains) {
+			if(table[i] != null && table[i].getValue().equals(value)) {
+				contains = true;
+			}
+			i++;
+		}
+		return contains;
 	}
 	
 	@Override
