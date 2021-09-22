@@ -38,11 +38,14 @@ public class Store {
 	public void pickUpGames(Client client) {
 		for (String code : client.getGameList()) {
 			Game game = games.get(code);
+			Shelf shelf = shelfs.get(game.getShelf().getName());
+			
 			//Add the game to the basket
 			client.getBasket().push(game);
 			//Remove one unit of the game from the shelf
-			shelfs.get(game.getShelf().getName()).getGames(); //UNCOMPLETE
-			
+			shelf.getGames().set(code, shelf.getGames().get(code) - 1);
+			//Increase time of client
+			client.setTime(client.getTime() + 1);
 		}
 	}
 	
