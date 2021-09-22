@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import datastructure.HashTable;
 import datastructure.Queue;
@@ -39,13 +38,15 @@ public class Store {
 		for (String code : client.getGameList()) {
 			Game game = games.get(code);
 			Shelf shelf = shelfs.get(game.getShelf().getName());
-			
-			//Add the game to the basket
-			client.getBasket().push(game);
-			//Remove one unit of the game from the shelf
-			shelf.getGames().set(code, shelf.getGames().get(code) - 1);
-			//Increase time of client
-			client.setTime(client.getTime() + 1);
+			int amount = shelf.getGames().get(code);
+			if(amount > 0) {
+				//Add the game to the basket
+				client.getBasket().push(game);
+				//Remove one unit of the game from the shelf
+				shelf.getGames().set(code, amount - 1);
+				//Increase time of client
+				client.setTime(client.getTime() + 1);
+			}
 		}
 	}
 	
