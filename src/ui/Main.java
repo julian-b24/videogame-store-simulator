@@ -9,10 +9,11 @@ public class Main {
 	public static final String DEFAULT_INPUT_PATH = "data/input/input.txt";
 	
 	private Store store;
-	//private StoreController controller;
+	private StoreController controller;
 	
 	public Main() throws NumberFormatException, IOException {
 		store = new Store(DEFAULT_INPUT_PATH);
+		controller = new StoreController(store);
 	}
 	
 	
