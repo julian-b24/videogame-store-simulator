@@ -96,7 +96,8 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 	@Override
 	public boolean containsKey(K key) {
 		boolean contains = false;
-		for (int i = 0; i < table.length && !contains; i++) {
+		int hashCode = key.hashCode();
+		for (int i = hashCode; i < table.length && !contains; i++) {
 			if(table[i] != null && table[i].getKey().equals(key)) {
 				contains = true;
 			}
