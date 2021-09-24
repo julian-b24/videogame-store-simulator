@@ -29,6 +29,39 @@ public class Store {
 		readInput(inputFile);
 	}
 
+	
+	//Section 2 actions
+	//Start the process of section 2
+	public void startSection2() {
+		//Receive a list with the codes of each game
+		ArrayList<Client> passedClients = new ArrayList<>();
+		while(!clients.isEmpty()) {
+			getAvailableGameList(clients.front());
+			passedClients.add(clients.front());
+			clients.dequeue();
+		}
+	}
+	
+	private void getAvailableGameList(Client client) {
+		ArrayList<String> availableGames = new ArrayList<>();
+		//search for each game in the clients game list, then ordered by shelfs
+		for (int i = 0; i < client.getGameList().size(); i++) {
+			String codeGameX = client.getGameList().get(i);
+			//verify that the game is in the store
+			if(games.containsKey(codeGameX)) {
+				//get the game object from the store based on its code
+				Game gameX = games.get(codeGameX);
+				//get the shelf where the game is
+				String shelfContainerName = gameX.getShelf().getName();
+				//verify that there are still available copies
+				if(shelfs.get(shelfContainerName).getGames().get(codeGameX)>0) {
+					availableGames.add(gameX.getCode());
+				}
+			}
+		}
+		client.setGameList(availableGames);
+	}
+
 	//Section 3 actions
 	//Start the process of section 3
 	public ArrayList<Client> startSection3() {
