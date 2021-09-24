@@ -228,6 +228,10 @@ public class Store {
 		br.close();
 	}
 	
+	public String generateOutput() {
+		return null;
+	}
+	
 	public HashTable<String, Shelf> getShelfs() {
 		return shelfs;
 	}
