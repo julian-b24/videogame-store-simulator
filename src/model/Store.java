@@ -1,12 +1,15 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import datastructure.HashTable;
 import datastructure.Queue;
+import datastructure.Stack;
 
 public class Store {
 
@@ -164,6 +167,7 @@ public class Store {
 				actualClient.getBasket().pop();
 				
 				if(actualClient.getBasket().isEmpty()) {
+					retrieveGamesToClient(cashiers[i].getGames(), actualClient.getBasket());
 					finalClientList.add(actualClient);
 					finalPriceList.add(cashiers[i].getBill());
 					cashierSlots.set(i, null);
@@ -171,6 +175,13 @@ public class Store {
 				}
 				
 			}
+		}
+	}
+	
+	private void retrieveGamesToClient(Stack<Game> cashierStack, Stack<Game> clientStack) {
+		while(!cashierStack.isEmpty()) {
+			clientStack.push(cashierStack.top());
+			cashierStack.pop();
 		}
 	}
 	
@@ -228,8 +239,24 @@ public class Store {
 		br.close();
 	}
 	
-	public String generateOutput() {
-		return null;
+	public void generateOutput(String fileName) throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+		String message = "";
+		for(int i = 0; i < finalClientList.size(); i++) {
+			message += finalClientList.get(i).getId() + " " + finalPriceList.get(i) + "\n";
+			message += basketOutput(finalClientList.get(i).getBasket()) + "\n";
+		}
+		bw.write(message);
+		bw.close();
+	}
+	
+	public String basketOutput(Stack<Game> stack) {
+		String output = "";
+		while(!stack.isEmpty()) {
+			output += stack.top().getCode() + " ";
+			stack.pop();
+		}
+		return output;
 	}
 	
 	public HashTable<String, Shelf> getShelfs() {
