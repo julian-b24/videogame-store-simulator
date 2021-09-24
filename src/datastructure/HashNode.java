@@ -3,6 +3,7 @@ package datastructure;
 public class HashNode<K, V> extends Node<V>{
 
 	private K key;
+	private boolean deleted;
 
 	public HashNode(K key, V value) {
 		super(value);
@@ -15,6 +16,14 @@ public class HashNode<K, V> extends Node<V>{
 
 	public void setKey(K key) {
 		this.key = key;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 }
