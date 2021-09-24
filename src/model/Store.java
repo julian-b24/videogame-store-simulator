@@ -1,5 +1,10 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import datastructure.HashTable;
@@ -18,6 +23,10 @@ public class Store {
 		this.shelfs = shelfs;
 		this.clients = clients;
 		cashiers = new Cashier[cashierAmount];
+	}
+	
+	public Store(String inputFile) throws NumberFormatException, IOException {
+		readInput(inputFile);
 	}
 
 	//Section 3 actions
@@ -106,6 +115,13 @@ public class Store {
 				
 			}
 		}
+	}
+	
+	private void readInput(String fileName) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		
+		int cases = Integer.valueOf(br.readLine());
+		//TODO
 	}
 	
 	public HashTable<String, Shelf> getShelfs() {
