@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import datastructure.HashTable;
 import datastructure.Queue;
@@ -40,6 +41,9 @@ public class Store {
 			passedClients.add(clients.front());
 			clients.dequeue();
 		}
+		for (int i = 0; i < passedClients.size(); i++) {
+			clients.enqueue(passedClients.get(i));
+		}
 	}
 	
 	private void getAvailableGameList(Client client) {
@@ -59,8 +63,34 @@ public class Store {
 				}
 			}
 		}
-		client.setGameList(availableGames);
+		ArrayList<String> clientOrderedGames = orderGamesByShelf(availableGames);
+		client.setGameList(clientOrderedGames);
 	}
+
+	private ArrayList<String> orderGamesByShelf(ArrayList<String> availableGames) {
+		String l = "";
+		ArrayList<String> finalLsit = new ArrayList<>();
+		for (int i = 0; i < availableGames.size(); i++) {
+			l+=availableGames.get(i);
+		}
+		char[] aGames = l.toCharArray();
+		
+		 int n = aGames.length;
+	        for (int i = 0; i < n-1; i++)
+	            for (int j = 0; j < n-i-1; j++)
+	                if (aGames[j] > aGames[j+1])
+	                {
+	                    char temp = aGames[j];
+	                    aGames[j] = aGames[j+1];
+	                    aGames[j+1] = temp;
+	                }
+	        for (int i = 0; i < aGames.length; i++) {
+				finalLsit.add(aGames[i]+"");
+			}
+		return finalLsit;
+	}
+
+	
 
 	//Section 3 actions
 	//Start the process of section 3
