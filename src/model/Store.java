@@ -1,12 +1,9 @@
 package model;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import datastructure.HashTable;
 import datastructure.Queue;
@@ -19,14 +16,12 @@ public class Store {
 	private HashTable<String, Game> games;
 	private ArrayList<Client> finalClientList = new ArrayList<Client>();
 	private ArrayList<Integer> finalPriceList = new ArrayList<Integer>();
-	
-	public Store(HashTable<String, Shelf> shelfs, Queue<Client> clients, int cashierAmount) {
-		this.shelfs = shelfs;
-		this.clients = clients;
-		cashiers = new Cashier[cashierAmount];
-	}
+	private int clientsInStore;		//amount of clients in the store; used for time
 	
 	public Store(String inputFile) throws NumberFormatException, IOException {
+		shelfs = new HashTable<String, Shelf>();
+		clients = new Queue<Client>();
+		clientsInStore = 0;
 		readInput(inputFile);
 	}
 
@@ -183,7 +178,54 @@ public class Store {
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		
 		int cases = Integer.valueOf(br.readLine());
-		//TODO
+		while(cases > 0) {
+			int amountCashiers = Integer.valueOf(br.readLine());
+			cashiers = new Cashier[amountCashiers];
+			
+			int amountShelfs = Integer.valueOf(br.readLine());
+			while(amountShelfs > 0) {
+				String[] line = br.readLine().split(" ");
+				String shelfName = line[0];
+				int gamesInShelf = Integer.valueOf(line[1]);
+				
+				Shelf shelf = new Shelf(shelfName);
+				while(gamesInShelf > 0) {
+					
+					String[] gameLine = br.readLine().split(" ");
+					String code = gameLine[0];
+					int price = Integer.valueOf(gameLine[1]);
+					int units = Integer.valueOf(gameLine[2]);
+					
+					Game game = new Game(code, price, shelf);
+					shelf.getGames().add(code, units);
+					games.add(code, game);
+					
+					gamesInShelf--;
+				}
+				
+				shelfs.add(shelfName, shelf);
+				amountShelfs--;
+			}
+			
+			int amountClients = Integer.valueOf(br.readLine());
+			while(amountClients > 0) {
+				String[] clientLine = br.readLine().split(" ");
+				String id = clientLine[0];
+				ArrayList<String> gameList = new ArrayList<String>();
+				for (int i = 1; i < clientLine.length; i++) {
+					String gameCode = clientLine[i];
+					gameList.add(gameCode);
+				}
+				
+				Client client = new Client(clientsInStore + 1, id, gameList);
+				clientsInStore++;
+				clients.enqueue(client);
+				amountClients--;
+			}
+			
+			cases--;
+		}
+		br.close();
 	}
 	
 	public HashTable<String, Shelf> getShelfs() {
