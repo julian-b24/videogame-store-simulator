@@ -32,7 +32,6 @@ public class Store {
 	//Section 2 actions
 		//Start the process of section 2
 		public void startSection2() {
-			System.out.println("SECTION 2");
 			//Receive a list with the codes of each game
 			ArrayList<Client> passedClients = new ArrayList<>();
 			while(!clients.isEmpty()) {
@@ -102,7 +101,6 @@ public class Store {
 	//Section 3 actions
 	//Start the process of section 3
 	public ArrayList<Client> startSection3() {
-		System.out.println("SECTION 3");
 		ArrayList<Client> passedClients = new ArrayList<>();
 
 		while (!clients.isEmpty()) {
@@ -115,7 +113,6 @@ public class Store {
 
 	//Executes the pick up process of a client based on the games list
 	public void pickUpGames(Client client) {
-		System.out.println(client.getGameList());
 		for (String code : client.getGameList()) {
 			Game game = games.get(code);
 			Shelf shelf = shelfs.get(game.getShelf().getName());
@@ -132,7 +129,6 @@ public class Store {
 	}
 
 	public void startSection4(ArrayList<Client> passedClients) {
-		System.out.println("SECTION 4");
 		sortClientList(passedClients);
 		for(int i = 0; i < passedClients.size(); i++) {
 			clients.enqueue(passedClients.get(i));
@@ -180,8 +176,6 @@ public class Store {
 				if(cashierSlots.get(i) != null) {
 					actualClient = cashierSlots.get(i);
 					//actualClient = cashierSlots.get(i);
-					System.out.println(actualClient.getId());
-					System.out.println("1: " + (actualClient == null));
 					cashiers[i].getGames().push(actualClient.getBasket().top());
 					cashiers[i].setBill(cashiers[i].getBill() + actualClient.getBasket().top().getPrice());
 					actualClient.getBasket().pop();

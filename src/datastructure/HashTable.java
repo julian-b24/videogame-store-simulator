@@ -33,12 +33,9 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 		V value = null;
 		boolean found = false;
 		int hashCode = hashFunction(key);
-		System.out.println("Key: " + key);
-		System.out.println("Hashcode: " + hashCode);
 		
 		while(i < MAX_SIZE && !found) {
 			int index = hashCode + i;
-			System.out.println("Index: " + index);
 			if(table[index] != null && table[index].getKey().equals(key)) {
 				found = true;
 				value = table[index].getValue();
