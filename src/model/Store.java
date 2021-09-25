@@ -30,73 +30,74 @@ public class Store {
 	}
 
 	//Section 2 actions
-		//Start the process of section 2
-		public void startSection2() {
-			//Receive a list with the codes of each game
-			ArrayList<Client> passedClients = new ArrayList<>();
-			while(!clients.isEmpty()) {
-				getAvailableGameList(clients.front());
-				passedClients.add(clients.front());
-				clients.dequeue();
-			}
-			for (int i = 0; i < passedClients.size(); i++) {
-				clients.enqueue(passedClients.get(i));
+	//Start the process of section 2
+	public void startSection2() {
+		//Receive a list with the codes of each game
+		ArrayList<Client> passedClients = new ArrayList<>();
+		while(!clients.isEmpty()) {
+			getAvailableGameList(clients.front());
+			passedClients.add(clients.front());
+			clients.dequeue();
+		}
+		for (int i = 0; i < passedClients.size(); i++) {
+			clients.enqueue(passedClients.get(i));
+		}
+	}
+	
+	//This method has complexity analysis in document
+	private void getAvailableGameList(Client client) {
+		ArrayList<String> availableGames = new ArrayList<>();
+		//search for each game in the clients game list, then ordered by shelfs
+		for (int i = 0; i < client.getGameList().size(); i++) {
+			String codeGameX = client.getGameList().get(i);
+			//verify that the game is in the store
+			if(games.containsKey(codeGameX)) {
+				//get the game object from the store based on its code
+				Game gameX = games.get(codeGameX);
+				
+				//get the shelf where the game is
+				String shelfContainerName = gameX.getShelf().getName();
+				
+				//verify that there are still available copies
+				if(shelfs.get(shelfContainerName).getGames().get(codeGameX)>0) {
+					availableGames.add(gameX.getCode());
+				}
 			}
 		}
 		
-		//This method has complexity analysis in document
-		private void getAvailableGameList(Client client) {
-			ArrayList<String> availableGames = new ArrayList<>();
-			//search for each game in the clients game list, then ordered by shelfs
-			for (int i = 0; i < client.getGameList().size(); i++) {
-				String codeGameX = client.getGameList().get(i);
-				//verify that the game is in the store
-				if(games.containsKey(codeGameX)) {
-					//get the game object from the store based on its code
-					Game gameX = games.get(codeGameX);
-					
-					//get the shelf where the game is
-					String shelfContainerName = gameX.getShelf().getName();
-					
-					//verify that there are still available copies
-					if(shelfs.get(shelfContainerName).getGames().get(codeGameX)>0) {
-						availableGames.add(gameX.getCode());
-					}
-				}
-			}
-			
-			ArrayList<String> clientOrderedGames = orderGamesByShelf(availableGames);
-			client.setGameList(clientOrderedGames);
-		}
+		ArrayList<String> clientOrderedGames = orderGamesByShelf(availableGames);
+		client.setGameList(clientOrderedGames);
+	}
 
-		//This method has complexity analysis in document
-		private ArrayList<String> orderGamesByShelf(ArrayList<String> availableGames) {
-			String l = "";
-			ArrayList<String> finalLsit = new ArrayList<>();
-			for (int i = 0; i < availableGames.size(); i++) {
-				l += games.get(availableGames.get(i)).getShelf().getName();
-			}
-			char[] aGames = l.toCharArray();
-			
-			 int n = aGames.length;
-		        for (int i = 0; i < n-1; i++)
-		            for (int j = 0; j < n-i-1; j++)
-		                if (aGames[j] >= aGames[j+1])
-		                {
-		                    char temp = aGames[j];
-		                    aGames[j] = aGames[j+1];
-		                    aGames[j+1] = temp;
-		                    
-		                    String tempCode = availableGames.get(j);
-		                    availableGames.set(j, availableGames.get(j + 1));
-		                    availableGames.set(j + 1, tempCode);
-		                    
-		                }
-		        for (int i = 0; i < aGames.length; i++) {
-					finalLsit.add(aGames[i]+"");
-				}
-			return availableGames;
+	//This method has complexity analysis in document
+	private ArrayList<String> orderGamesByShelf(ArrayList<String> availableGames) {
+		String l = "";
+		ArrayList<String> finalLsit = new ArrayList<>();
+		for (int i = 0; i < availableGames.size(); i++) {
+			l += games.get(availableGames.get(i)).getShelf().getName();
 		}
+		char[] aGames = l.toCharArray();
+		
+		int m = aGames.length;
+        for (int i = 0; i < m-1; i++) {
+            for (int j = 0; j < m-i-1; j++) {
+                if (aGames[j] > aGames[j+1]) {
+                    char temp = aGames[j];
+                    aGames[j] = aGames[j+1];
+                    aGames[j+1] = temp;
+                    
+                    String tempCode = availableGames.get(j);
+                    availableGames.set(j, availableGames.get(j + 1));
+                    availableGames.set(j + 1, tempCode);
+                    
+                }
+            }
+        }
+        for (int i = 0; i < aGames.length; i++) {
+			finalLsit.add(aGames[i]+"");
+		}
+		return availableGames;
+	}
 
 	
 
