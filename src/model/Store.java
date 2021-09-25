@@ -198,11 +198,16 @@ public class Store {
 			}
 		}
 	}
-	
+
 	private void retrieveGamesToClient(Stack<Game> cashierStack, Stack<Game> clientStack) {
+		Stack<Game> temporaryStack = new Stack<Game>();
 		while(!cashierStack.isEmpty()) {
-			clientStack.push(cashierStack.top());
+			temporaryStack.push(cashierStack.top());
 			cashierStack.pop();
+		}
+		while(!temporaryStack.isEmpty()) {
+			clientStack.push(temporaryStack.top());
+			temporaryStack.pop();
 		}
 	}
 	
