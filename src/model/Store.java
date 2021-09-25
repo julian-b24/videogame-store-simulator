@@ -44,6 +44,7 @@ public class Store {
 			}
 		}
 		
+		//This method has complexity analysis in document
 		private void getAvailableGameList(Client client) {
 			ArrayList<String> availableGames = new ArrayList<>();
 			//search for each game in the clients game list, then ordered by shelfs
@@ -68,6 +69,7 @@ public class Store {
 			client.setGameList(clientOrderedGames);
 		}
 
+		//This method has complexity analysis in document
 		private ArrayList<String> orderGamesByShelf(ArrayList<String> availableGames) {
 			String l = "";
 			ArrayList<String> finalLsit = new ArrayList<>();
@@ -79,7 +81,7 @@ public class Store {
 			 int n = aGames.length;
 		        for (int i = 0; i < n-1; i++)
 		            for (int j = 0; j < n-i-1; j++)
-		                if (aGames[j] > aGames[j+1])
+		                if (aGames[j] >= aGames[j+1])
 		                {
 		                    char temp = aGames[j];
 		                    aGames[j] = aGames[j+1];
