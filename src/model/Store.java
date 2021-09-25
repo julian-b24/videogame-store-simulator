@@ -23,6 +23,7 @@ public class Store {
 	
 	public Store(String inputFile) throws NumberFormatException, IOException {
 		shelfs = new HashTable<String, Shelf>();
+		games = new HashTable<String, Game>();
 		clients = new Queue<Client>();
 		clientsInStore = 0;
 		readInput(inputFile);
@@ -31,6 +32,7 @@ public class Store {
 	//Section 2 actions
 		//Start the process of section 2
 		public void startSection2() {
+			System.out.println("SECTION 2");
 			//Receive a list with the codes of each game
 			ArrayList<Client> passedClients = new ArrayList<>();
 			while(!clients.isEmpty()) {
@@ -52,14 +54,17 @@ public class Store {
 				if(games.containsKey(codeGameX)) {
 					//get the game object from the store based on its code
 					Game gameX = games.get(codeGameX);
+					
 					//get the shelf where the game is
 					String shelfContainerName = gameX.getShelf().getName();
+					
 					//verify that there are still available copies
 					if(shelfs.get(shelfContainerName).getGames().get(codeGameX)>0) {
 						availableGames.add(gameX.getCode());
 					}
 				}
 			}
+			
 			ArrayList<String> clientOrderedGames = orderGamesByShelf(availableGames);
 			client.setGameList(clientOrderedGames);
 		}
@@ -68,7 +73,7 @@ public class Store {
 			String l = "";
 			ArrayList<String> finalLsit = new ArrayList<>();
 			for (int i = 0; i < availableGames.size(); i++) {
-				l+=availableGames.get(i);
+				l += games.get(availableGames.get(i)).getShelf().getName();
 			}
 			char[] aGames = l.toCharArray();
 			
@@ -80,11 +85,16 @@ public class Store {
 		                    char temp = aGames[j];
 		                    aGames[j] = aGames[j+1];
 		                    aGames[j+1] = temp;
+		                    
+		                    String tempCode = availableGames.get(j);
+		                    availableGames.set(j, availableGames.get(j + 1));
+		                    availableGames.set(j + 1, tempCode);
+		                    
 		                }
 		        for (int i = 0; i < aGames.length; i++) {
 					finalLsit.add(aGames[i]+"");
 				}
-			return finalLsit;
+			return availableGames;
 		}
 
 	
@@ -92,7 +102,7 @@ public class Store {
 	//Section 3 actions
 	//Start the process of section 3
 	public ArrayList<Client> startSection3() {
-
+		System.out.println("SECTION 3");
 		ArrayList<Client> passedClients = new ArrayList<>();
 
 		while (!clients.isEmpty()) {
@@ -105,6 +115,7 @@ public class Store {
 
 	//Executes the pick up process of a client based on the games list
 	public void pickUpGames(Client client) {
+		System.out.println(client.getGameList());
 		for (String code : client.getGameList()) {
 			Game game = games.get(code);
 			Shelf shelf = shelfs.get(game.getShelf().getName());
@@ -121,10 +132,12 @@ public class Store {
 	}
 
 	public void startSection4(ArrayList<Client> passedClients) {
+		System.out.println("SECTION 4");
 		sortClientList(passedClients);
 		for(int i = 0; i < passedClients.size(); i++) {
 			clients.enqueue(passedClients.get(i));
 		}
+		
 		cashierSlots();
 	}
 
@@ -143,10 +156,15 @@ public class Store {
 	//Simulates the cashier slots process.
 	public void cashierSlots() {
 		
-		ArrayList<Client> cashierSlots = new ArrayList<Client>(cashiers.length);
+		ArrayList<Client> cashierSlots = new ArrayList<Client>();
+		for (int i = 0; i < cashiers.length ; i++) {
+			cashierSlots.add(null);
+			cashiers[i] = new Cashier();
+		}
 		Client actualClient;
 		
-		while(!clients.isEmpty() || !cashierSlots.isEmpty()) {
+		int count = 3;
+		while(!clients.isEmpty() || count != 0) {
 			
 			/*
 			It adds a client to the available slots from the client queue.
@@ -155,25 +173,34 @@ public class Store {
 			*/
 			
 			for(int i = 0; i < cashiers.length; i++) {
-				if(cashierSlots.get(i) == null) {
+				if(cashierSlots.get(i) == null && !clients.isEmpty() ) {
 					cashierSlots.set(i, clients.front());
 					clients.dequeue();
 				}
-				
-				actualClient = cashierSlots.get(i);
-				
-				cashiers[i].getGames().push(actualClient.getBasket().top());
-				cashiers[i].setBill(cashiers[i].getBill() + actualClient.getBasket().top().getPrice());
-				actualClient.getBasket().pop();
-				
-				if(actualClient.getBasket().isEmpty()) {
-					retrieveGamesToClient(cashiers[i].getGames(), actualClient.getBasket());
-					finalClientList.add(actualClient);
-					finalPriceList.add(cashiers[i].getBill());
-					cashierSlots.set(i, null);
-					cashiers[i].setBill(0);
+				if(cashierSlots.get(i) != null) {
+					actualClient = cashierSlots.get(i);
+					//actualClient = cashierSlots.get(i);
+					System.out.println(actualClient.getId());
+					System.out.println("1: " + (actualClient == null));
+					cashiers[i].getGames().push(actualClient.getBasket().top());
+					cashiers[i].setBill(cashiers[i].getBill() + actualClient.getBasket().top().getPrice());
+					actualClient.getBasket().pop();
+					
+					if(actualClient.getBasket().isEmpty()) {
+						retrieveGamesToClient(cashiers[i].getGames(), actualClient.getBasket());
+						finalClientList.add(actualClient);
+						finalPriceList.add(cashiers[i].getBill());
+						cashierSlots.set(i, null);
+						cashiers[i].setBill(0);
+					}
+				}	
+			}
+			
+			count = 0;
+			for (int i = 0; i < cashierSlots.size(); i++) {
+				if(cashierSlots.get(i) != null) {
+					count++;
 				}
-				
 			}
 		}
 	}

@@ -8,5 +8,5 @@ public interface IHashTable<K,V> {
 	public void delete(K key);
 	public boolean containsValue(V value);
 	public boolean containsKey(K key);
-	
+	public int hashFunction(K key);
 }

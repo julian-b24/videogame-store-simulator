@@ -39,7 +39,9 @@ public class Queue<V extends Comparable<V>> implements IQueue<V> {
 		}
 
 		front = previous;
-		previous.setNext(null);
+		if(front != null) {
+			previous.setNext(null);
+		}
 
 	}
 

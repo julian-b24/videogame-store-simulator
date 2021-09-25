@@ -2,7 +2,7 @@ package datastructure;
 
 public class HashTable<K,V> implements IHashTable<K, V>{
 
-	public final static int MAX_SIZE = 200;
+	public final static int MAX_SIZE = 233;
 
 	private HashNode<K, V>[] table;
 
@@ -13,7 +13,7 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 
 	@Override
 	public void add(K key, V value) {
-		int hashCode = key.hashCode();
+		int hashCode = hashFunction(key);
 		int i = 0;
 		boolean added = false;
 		while(i < MAX_SIZE && !added) {
@@ -32,10 +32,13 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 		int i = 0;
 		V value = null;
 		boolean found = false;
-		int hashCode = key.hashCode();
-
+		int hashCode = hashFunction(key);
+		System.out.println("Key: " + key);
+		System.out.println("Hashcode: " + hashCode);
+		
 		while(i < MAX_SIZE && !found) {
 			int index = hashCode + i;
+			System.out.println("Index: " + index);
 			if(table[index] != null && table[index].getKey().equals(key)) {
 				found = true;
 				value = table[index].getValue();
@@ -51,7 +54,7 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 	public void set(K key, V value) {
 		int i = 0;
 		boolean found = false;
-		int hashCode = key.hashCode();
+		int hashCode = hashFunction(key);
 		while(i < MAX_SIZE && !found) {
 			int index = hashCode + i;
 			if(table[index].getKey().equals(key)) {
@@ -65,7 +68,7 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 	@Override
 	public void delete(K key) {
 		int i = 0;
-		int hashCode = key.hashCode();
+		int hashCode = hashFunction(key);
 		boolean found = false;
 		while(i < MAX_SIZE && !found) {
 			int index = hashCode + i;
@@ -94,13 +97,20 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 	@Override
 	public boolean containsKey(K key) {
 		boolean contains = false;
-		int hashCode = key.hashCode();
+		int hashCode = hashFunction(key);
 		for (int i = hashCode; i < table.length && !contains; i++) {
 			if(table[i] != null && table[i].getKey().equals(key)) {
 				contains = true;
 			}
 		}
 		return contains;
+	}
+
+	@Override
+	public int hashFunction(K key) {
+		int keyCode = key.hashCode();
+		int hashCode = keyCode % MAX_SIZE;
+		return hashCode;
 	}
 
 }
