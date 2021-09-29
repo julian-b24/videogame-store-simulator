@@ -73,6 +73,10 @@ class HashTableTest {
 
 	@Test
 	void testSet() throws Exception {
+		setUp2HT();
+		hashTest.set(1, 5);
+		assertFalse(hashTest.containsValue(5));
+		
 		setUp3HT();
 		hashTest.set(232, 5);
 		assertEquals(hashTest.get(232), 5);
@@ -83,18 +87,21 @@ class HashTableTest {
 	}
 
 	@Test
-	void testDelete() {
-		fail("Not yet implemented");
+	void testContainsValue() throws Exception {
+		setUp2HT();
+		assertFalse(hashTest.containsValue(2));
+		
+		setUp3HT();
+		assertTrue(hashTest.containsValue(11));
 	}
 
 	@Test
-	void testContainsValue() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testContainsKey() {
-		fail("Not yet implemented");
+	void testContainsKey() throws Exception {
+		setUp2HT();
+		assertFalse(hashTest.containsKey(1));
+		
+		setUp3HT();
+		assertTrue(hashTest.containsKey(232));
 	}
 
 }

@@ -27,19 +27,24 @@ class StackTest {
 	}
 
 	@Test
-	void testStack() throws Exception {
-		setUp1ST();
-		testStackT = new Stack<>();
-		assertTrue(testStackT!=null);
-		assertTrue(testStackT.isEmpty());
-		assertNull(testStackT.top());
-	}
-
-	@Test
 	void testTop() throws Exception {
 		setUp1ST();
-		assertNull(testStackT.top());
+		try {
+			testStackT.top();
+			fail("Failed");
+		} catch (NullPointerException e) {
+			assertTrue(true);
+		}
+		
 		setUp2ST();
+		try {
+			testStackT.top();
+			fail("Failed");
+		} catch (NullPointerException e) {
+			assertTrue(true);
+		}
+
+		setUp3ST();
 		assertTrue(testStackT.top()==NUM2);
 	}
 
@@ -59,20 +64,24 @@ class StackTest {
 	@Test
 	void testPop() throws Exception {
 		setUp2ST();
+		try {
+			testStackT.pop();
+			fail("failed");
+		} catch (NullPointerException e) {
+			assertTrue(true);
+		}
 		
 		setUp3ST();
 		testStackT.pop();
-		assertEquals(testStackT.top(), NUM2);
+		assertEquals(testStackT.top(), NUM1);
 	}
 
 	@Test
 	void testIsEmpty() throws Exception {
 		setUp2ST();
 		assertTrue(testStackT.isEmpty());
-		assertNull(testStackT.top());
 		
 		setUp3ST();
 		assertFalse(testStackT.isEmpty());
-		assertNotNull(testStackT.top());
 	}
 }
