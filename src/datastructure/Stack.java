@@ -23,7 +23,12 @@ public class Stack<V extends Comparable<V>> implements IStack<V> {
 
 	@Override
 	public void pop() {
-		top = top.getNext();
+		try {
+			top = top.getNext();
+		} catch (NullPointerException e) {
+			
+		}
+		
 	}
 
 	@Override
