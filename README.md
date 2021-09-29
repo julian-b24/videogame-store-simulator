@@ -13,7 +13,7 @@ UI only supports English.
 
 You can download this software from [this link.](https://github.com/julian-b24/videogame-store-simulator)
 
-You can access the project's documentation from [this link](www.google.com) (Only available in Spanish).
+You can access the project's documentation from [this link](https://github.com/julian-b24/videogame-store-simulator/raw/master/docs/TAREA%20INTEGRADORA%201_%20TIENDA%20DE%20VIDEOJUEGOS.pdf) (Only available in Spanish).
 
 ## **About**
 videogame-store-simulator is a software built to simulate the operation of a specific game store. It uses a GUI to load an input .txt file and create 2 outputs of the same format.
