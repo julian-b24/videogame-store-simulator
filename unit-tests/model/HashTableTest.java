@@ -73,6 +73,10 @@ class HashTableTest {
 
 	@Test
 	void testSet() throws Exception {
+		setUp2HT();
+		hashTest.set(1, 5);
+		assertFalse(hashTest.containsValue(5));
+		
 		setUp3HT();
 		hashTest.set(232, 5);
 		assertEquals(hashTest.get(232), 5);
@@ -80,16 +84,6 @@ class HashTableTest {
 		setUp4HT();
 		hashTest.set(1, 500);
 		assertEquals(hashTest.get(1), 500);
-	}
-
-	@Test
-	void testDelete() throws Exception {
-		setUp2HT();
-		
-		
-		setUp3HT();
-		
-
 	}
 
 	@Test

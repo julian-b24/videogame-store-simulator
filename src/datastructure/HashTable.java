@@ -58,27 +58,11 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 		int hashCode = hashFunction(key);
 		while(i < MAX_SIZE && !found) {
 			int index = hashCode + i;
-			if(table[index].getKey().equals(key)) {
+			if(table[index] != null && table[index].getKey().equals(key)) {
 				found = true;
 				table[index].setValue(value);
 			}
 			i++;
-		}
-	}
-	
-	@Override
-	public void delete(K key) {
-		int i = 0;
-		int hashCode = hashFunction(key);
-		boolean found = false;
-		while(i < MAX_SIZE && !found) {
-			int index = hashCode + i;
-			if(table[index] == null && table[index].getKey().equals(key)) {
-				found = true;
-				table[index] = null;
-			}else {
-				i++;
-			}
 		}
 	}
 

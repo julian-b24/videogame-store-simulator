@@ -61,10 +61,12 @@ class QueueTest {
 	@Test
 	void testDequeue() throws Exception {
 		setUp2Q();
-		testQueue.dequeue();
-		assertNull(testQueue.front());
-		assertNull(testQueue.rear());
-		assertTrue(testQueue.isEmpty());
+		try {
+			testQueue.dequeue();
+			fail("failed");
+		} catch (NullPointerException e) {
+			assertTrue(true);
+		}
 		
 		setUp3Q();
 		testQueue.dequeue();
