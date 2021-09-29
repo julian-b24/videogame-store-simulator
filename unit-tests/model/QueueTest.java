@@ -30,7 +30,11 @@ class QueueTest {
 	@Test
 	void testFront() throws Exception {
 		setUp2Q();
-		assertNull(testQueue.front());
+		try {
+			testQueue.front();
+		} catch (NullPointerException e) {
+			assertTrue(true);
+		}
 		
 		setUp3Q();
 		assertEquals(testQueue.front(), NUM2);
@@ -39,7 +43,11 @@ class QueueTest {
 	@Test
 	void testRear() throws Exception {
 		setUp2Q();
-		assertNull(testQueue.rear());
+		try {
+			testQueue.rear();
+		} catch (NullPointerException e) {
+			assertTrue(true);
+		}
 		
 		setUp3Q();
 		assertEquals(testQueue.rear(), NUM1);
