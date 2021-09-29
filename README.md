@@ -29,7 +29,9 @@ Browse a .txt file with a valid input to create 2 .txt files with the output and
 
 ## **Functionalities**
 RF 1. Simulate the store's purchasing process.
+
 RF 2. Allow the user to enter different values related to the store.
+
 RF 3. Show the user the result of the simulation.
 
 Check the project's documentation to find more information about the functionalities.
