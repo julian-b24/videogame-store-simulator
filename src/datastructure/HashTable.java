@@ -18,16 +18,12 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 		boolean added = false;
 		while(i < MAX_SIZE && !added) {
 			int index = i + hashCode;
-			try {
 				if(table[index] == null) {
 					table[index] = new HashNode<K, V>(key, value);
 					added = true;
 				}else {
 					i++;
 				}
-			}catch(IndexOutOfBoundsException e){
-				
-			}
 		}
 	}
 
