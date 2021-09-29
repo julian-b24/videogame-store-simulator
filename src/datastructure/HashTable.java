@@ -18,11 +18,15 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 		boolean added = false;
 		while(i < MAX_SIZE && !added) {
 			int index = i + hashCode;
-			if(table[index] == null) {
-				table[index] = new HashNode<K, V>(key, value);
-				added = true;
-			}else {
-				i++;
+			try {
+				if(table[index] == null) {
+					table[index] = new HashNode<K, V>(key, value);
+					added = true;
+				}else {
+					i++;
+				}
+			}catch(IndexOutOfBoundsException e){
+				
 			}
 		}
 	}
@@ -61,7 +65,7 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 			i++;
 		}
 	}
-
+	
 	@Override
 	public void delete(K key) {
 		int i = 0;
@@ -102,7 +106,7 @@ public class HashTable<K,V> implements IHashTable<K, V>{
 		}
 		return contains;
 	}
-
+	
 	@Override
 	public int hashFunction(K key) {
 		int keyCode = key.hashCode();
