@@ -13,12 +13,14 @@ import datastructure.Stack;
 
 public class Store {
 
+	private String storeStateAdvance;
+	
 	private HashTable<String, Shelf> shelfs;
 	private Queue<Client> clients;
 	private Cashier[] cashiers;
 	private HashTable<String, Game> games;
-	private ArrayList<Client> finalClientList = new ArrayList<Client>();
-	private ArrayList<Integer> finalPriceList = new ArrayList<Integer>();
+	private ArrayList<Client> finalClientList;
+	private ArrayList<Integer> finalPriceList;
 	private int clientsInStore;		//amount of clients in the store; used for time
 	
 	public Store(String inputFile) throws NumberFormatException, IOException {
@@ -26,6 +28,9 @@ public class Store {
 		games = new HashTable<String, Game>();
 		clients = new Queue<Client>();
 		clientsInStore = 0;
+		finalClientList = new ArrayList<Client>();
+		finalPriceList = new ArrayList<Integer>();
+		storeStateAdvance = "";
 		readInput(inputFile);
 	}
 
@@ -34,8 +39,10 @@ public class Store {
 	public void startSection2() {
 		//Receive a list with the codes of each game
 		ArrayList<Client> passedClients = new ArrayList<>();
+		storeStateAdvance += "SECTION 2\n";
 		while(!clients.isEmpty()) {
 			getAvailableGameList(clients.front());
+			storeStateAdvance += clients.front().getId() + " " + clients.front().getGameList() + " " + clients.front().getTime() + "\n";
 			passedClients.add(clients.front());
 			clients.dequeue();
 		}
@@ -105,12 +112,17 @@ public class Store {
 	//Start the process of section 3
 	public ArrayList<Client> startSection3() {
 		ArrayList<Client> passedClients = new ArrayList<>();
-
+		storeStateAdvance += "\nSECTION 3\n";
 		while (!clients.isEmpty()) {
 			pickUpGames(clients.front());
 			passedClients.add(clients.front());
 			clients.dequeue();
 		}
+		
+		for (Client client : passedClients) {
+			storeStateAdvance += client.getId() + " " + client.getGameList() + " " + client.getTime() + "\n";
+		}
+		
 		return passedClients;
 	}
 
@@ -276,6 +288,12 @@ public class Store {
 			message += basketOutput(finalClientList.get(i).getBasket()) + "\n";
 		}
 		bw.write(message);
+		bw.close();
+	}
+	
+	public void generateStateOutput(String fileName) throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+		bw.write(storeStateAdvance.replace("[", "").replace("]", ""));
 		bw.close();
 	}
 	

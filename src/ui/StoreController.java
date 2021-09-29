@@ -17,6 +17,8 @@ public class StoreController {
 
 	public static final String DEFAULT_OUTPUT_PATH = "data/output/output.txt";
 	
+	public static final String DEFAULT_STATE_PATH = "data/output/state.txt";
+	
 	private Store store;
 	
 	@FXML
@@ -49,6 +51,7 @@ public class StoreController {
     	store.startSection2();
     	store.startSection4(store.startSection3());
     	store.generateOutput(DEFAULT_OUTPUT_PATH);
+    	store.generateStateOutput(DEFAULT_STATE_PATH);
     	txtSuccessMessage.setVisible(true);
     }
     
