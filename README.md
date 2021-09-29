@@ -38,8 +38,11 @@ Check the project's documentation to find more information about the functionali
 
 ## **Development Features**
 Developed with the following software:
+
 Eclipse IDE
+
 JDK 1.8.0
+
 Windows 10
 
 ## **Note**
